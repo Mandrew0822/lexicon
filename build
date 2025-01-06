@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd ~
+mkdir .lexicon
+cd lexicon
+cp /lexicon/german.lang /lexicon/latin.lang ~/.lexicon
+cd lexicon
+cc lexicon.c -o lexicon
+sudo cp lexicon /usr/local/bin
