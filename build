@@ -1,9 +1,26 @@
 #!/bin/bash
 
-cd ~
-mkdir .lexicon
-cd lexicon
-cp /lexicon/german.lang /lexicon/latin.lang ~/.lexicon
-cd lexicon
-cc lexicon.c -o lexicon
-sudo cp lexicon /usr/local/bin
+if [ ! -d "$HOME/.lexicon" ]; then
+  mkdir "$HOME/.lexicon"
+fi
+
+if [ -f "german.lang" ] && [ -f "latin.lang" ]; then
+  cp german.lang latin.lang "$HOME/.lexicon"
+else
+  echo "Required language files are missing."
+  exit 1
+fi
+
+if [ -f "lexicon.c" ]; then
+  cc lexicon.c -o lexicon
+else
+  echo "Source file lexicon.c is missing."
+  exit 1
+fi
+
+if [ -f "lexicon" ]; then
+  sudo cp lexicon /usr/local/bin
+else
+  echo "Compilation failed; lexicon executable is missing."
+  exit 1
+fi
